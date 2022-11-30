@@ -7,7 +7,7 @@ dotenv.config()
 
 const app=express()
 
-mongoose.connect(process.env.DB_CREDENTIALS).then(() => {
+mongoose.connect(process.env.DB_CRENDENTIALS).then(() => {
   console.log('Database connection successful')
 })
 .catch(err => {

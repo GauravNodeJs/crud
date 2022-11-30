@@ -1,7 +1,8 @@
 import mongoose from "mongoose";
 import { Schema } from "mongoose";
 import bcrypt from 'bcrypt';
-import mongooseSoftDelete from 'mongoose-soft-delete'
+import { boolean } from "joi";
+
 
 const userSchema = new Schema({
     firstName: {
@@ -18,17 +19,18 @@ const userSchema = new Schema({
     },
     email: {
         type: String,
+        required:true,
         unique: true
+    },
+    delete:{
+        type:Boolean,
+        default:false
     }
 },
     { timestamps: true }
 )
-userSchema.plugin(mongooseSoftDelete, {
-    paranoid: true,
-  });
 userSchema.pre('save', async function (next) {
     try {
-        // const salt = await bcrypt.genSalt(5)
         const savedPassword = await bcrypt.hash(this.password, 5)
         this.password = savedPassword
         next()

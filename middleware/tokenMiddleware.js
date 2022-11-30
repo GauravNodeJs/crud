@@ -6,7 +6,7 @@ class MiddlewareToken{
         let authorization = req.headers.authorization
         const token = authorization.replace("Bearer ", "")
         try {
-            const decoded = jwt.verify(token, 'shhhhh')
+            const decoded = jwt.verify(token, process.env.SECRET_KEY)
             req.user = decoded
         }
         catch (err) {

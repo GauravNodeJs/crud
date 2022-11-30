@@ -1,13 +1,16 @@
 const MESSAGES={
-    LOGIN_ERROR : 'Invalid Credentials',
+    INVALID_CREDENTIALS : 'Invalid Credentials',
     LOGIN_SUCCESS:'Login successfully',
     PROFILE:"profile information",
     UPDATED_SUCCESS:"successfully updated data",
-    UPDATED_ERROR:"Invalid Credentials while update",
     REGISTER_SUCCESS:"Successfully register",
-    REGISTER_ERROR:"Somthing went wrong invalid details ",
+    INVALID_DETAILS:"invalid details ",
     EMAIL_EXIST:"Email already exist",
     DELETE_USER:"User Deleted Successfully",
-    NOT_DELETED:"User Not Deleted"
+    NOT_DELETED:"User Not Deleted",
+    NOT_UPDATED:"User Not Updated",
+    USER_NOT_FOUND:"User Not Found",
+    SOMETHING_WENT_WRONG:"something went wrong"
+
 }
 export default MESSAGES
