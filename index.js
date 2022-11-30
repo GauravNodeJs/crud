@@ -1,11 +1,13 @@
 import express  from 'express';
-import get from './router.js';
-import mongoose from 'mongoose'
+import get from './router';
+import mongoose from 'mongoose';
+import * as dotenv from 'dotenv'
 
+dotenv.config()
 
 const app=express()
 
-mongoose.connect('mongodb://localhost:27017/NewUsers').then(() => {
+mongoose.connect(process.env.DB_CREDENTIALS).then(() => {
   console.log('Database connection successful')
 })
 .catch(err => {
@@ -13,6 +15,6 @@ mongoose.connect('mongodb://localhost:27017/NewUsers').then(() => {
 });
 get(app) 
  
-app.listen(3000)
+app.listen(process.env.PORT)
 
 

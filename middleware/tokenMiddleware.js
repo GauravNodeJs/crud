@@ -1,23 +1,25 @@
-import MyResponse from '../helpers/message.js'
+import MyResponse from '../helpers/message'
 import jwt from 'jsonwebtoken'
-const tokenMiddleware = (req, res, next) => {
+class MiddlewareToken{
+    tokenMiddleware  (req, res, next) {
 
-    let authorization = req.headers.authorization
-    console.log(req.headers)
-    const token = authorization.replace("Bearer ", "")
-    try {
-        const decoded = jwt.verify(token, 'shhhhh')
-        req.user = decoded
+        let authorization = req.headers.authorization
+        const token = authorization.replace("Bearer ", "")
+        try {
+            const decoded = jwt.verify(token, 'shhhhh')
+            req.user = decoded
+        }
+        catch (err) {
+            let resPayload = {
+                message: err.message,
+                payload: {}
+            };
+            return MyResponse.error(res, resPayload, 401)
+        }
+    
+        next();
     }
-    catch (err) {
-        let resPayload = {
-            message: err.message,
-            payload: {}
-        };
-        return MyResponse.error(res, resPayload, 401)
-    }
-
-    next();
 }
+ 
 
-export default tokenMiddleware;
+export default new MiddlewareToken;
