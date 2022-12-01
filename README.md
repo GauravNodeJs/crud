@@ -13,3 +13,13 @@ g) mongoose version-6.7.3
 steps for using crud
 step1->npm i
 step2->npm start
+# CRUD API Link & Working:
+  >>USER Register :POST API --   localhost:3000/register
+
+  >>USER LOGIN : POST API -- localhost:3000/login
+
+  >>USER DETAILS UPDATE : PUT API -- localhost:3000/updateUser
+
+  >>USER DELETE : POST API --  localhost:3000/deleteUser
+
+  >>USER PROFILE : GET API -- localhost:3000/profile
