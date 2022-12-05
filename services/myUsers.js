@@ -3,8 +3,7 @@ import MyResponse from '../helpers/message'
 import jwt from "jsonwebtoken"
 import bcrypt from 'bcrypt'
 import MESSAGES from "../helpers/commonMessages";
-import upload from '../helpers/multerHelper'
-
+import details from "../models/details";
 class UserService {
     async registerAllUser(req, res) {
         try {
@@ -15,14 +14,30 @@ class UserService {
                 };
                 return MyResponse.error(res, resPayload,409);
             }
-            const myData = new User(req.body);
+            let addressInput = {
+                houseNo: req.body.address.houseNo,
+                city: req.body.address.city,
+                state: req.body.address.state,
+                country: req.body.address.country,
+                pin: req.body.address.pin,
+            }
+            let myAddress=  new details(addressInput);
+            myAddress.save();
+            let userInput={
+                firstName:req.body.firstName,
+                lastName:req.body.lastName,
+                password:req.body.password,
+                email:req.body.email,
+                delete:req.body.delete
+            }
+            const myData = new User(userInput);
             myData.save()
 
 
             let resPayload = {
                 message: MESSAGES.REGISTER_SUCCESS,
             };
-            return MyResponse.success(res, resPayload)
+             MyResponse.success(res, resPayload)
         }
         catch (err) {
             let resPayload = {
@@ -148,9 +163,9 @@ class UserService {
             return MyResponse.error(res, resPayload,500)
         }
     }
-    addFile(req,res){
+    details(req,res){
+  
     }
-
 }
 
 

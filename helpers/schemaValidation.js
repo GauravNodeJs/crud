@@ -34,7 +34,6 @@ const schemaValidator = (route, method) => {
                 '/login': loginValidation
             }
             return obj[route]
-
     }
 
 }
