@@ -1,7 +1,8 @@
 # crud
-overview -->I have worked on the CRUD Operations using the techonlogy i.s
-I have also implemented the password functionality in which i have used the bcrypt(used for the password hashing)
-Implement the validations as well for this i have used the Joi validator.
+## overview --> 
+*I have worked on the CRUD Operations using the techonlogy i.s
+*I have also implemented the password functionality in which i have used the bcrypt(used for the password hashing)
+## Implement the validations as well for this i have used the Joi validator.
 i have used jwt to genrate the token 
 a) Express framework-4.18.2
 b) Mongodb database -4.11.0
