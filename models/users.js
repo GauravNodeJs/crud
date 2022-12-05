@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 import { Schema } from "mongoose";
 import bcrypt from 'bcrypt';
-import { boolean } from "joi";
 
 
 const userSchema = new Schema({
@@ -19,12 +18,12 @@ const userSchema = new Schema({
     },
     email: {
         type: String,
-        required:true,
+        required: false,
         unique: true
     },
-    delete:{
-        type:Boolean,
-        default:false
+    delete: {
+        type: Boolean,
+        default: false
     }
 },
     { timestamps: true }

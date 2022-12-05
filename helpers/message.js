@@ -1,5 +1,5 @@
-class MyResponse{
-    success(res,data,statusCode=200) {
+class MyResponse {
+    success(res, data, statusCode = 200) {
         let myPayload = {
             status: true,
             message: data.message,
@@ -8,7 +8,7 @@ class MyResponse{
         res.status(statusCode).send(myPayload);
     }
 
-    error(res,data,statusCode=200) {
+    error(res, data, statusCode = 200) {
         let myPayload = {
             status: false,
             message: data.message,
