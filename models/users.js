@@ -1,9 +1,13 @@
 import mongoose from "mongoose";
 import { Schema } from "mongoose";
 import bcrypt from 'bcrypt';
-import details from "./details";
-
+import detailsSchema from "./details";
+import {nanoid} from 'nanoid'
 const userSchema = new Schema({
+    _id:{
+        type:String,
+        default: ()=>nanoid()
+    },
     firstName: {
         type: String,
         required: false,
@@ -24,7 +28,8 @@ const userSchema = new Schema({
     delete: {
         type: Boolean,
         default: false
-    }
+    },
+    address:detailsSchema
 },
     { timestamps: true }
 )

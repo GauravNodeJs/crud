@@ -23,6 +23,8 @@ const get = (app) => {
             }   
         })  
     })
+    app.post('/addQuote',MiddlewareToken.tokenMiddleware,UserService.addquotes)
+    app.get('/getQuote',MiddlewareToken.tokenMiddleware,UserService.getQuotes)
 }
 export default get
 

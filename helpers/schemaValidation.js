@@ -11,7 +11,7 @@ const validation = joi.object({
 
 const loginValidation = joi.object({
     email: joi.string().email().required(),
-    password: joi.string().min(8).trim(true).required()
+    password: joi.string().min(6).trim(true).required()
 
 });
 const updateValidation = joi.object({
