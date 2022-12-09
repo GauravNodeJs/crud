@@ -11,6 +11,7 @@ const MESSAGES = {
     NOT_UPDATED: "User Not Updated",
     USER_NOT_FOUND: "User Not Found",
     SOMETHING_WENT_WRONG: "something went wrong",
-    YOUR_QUOTES:"your quotes"
+    YOUR_QUOTES:"your quotes",
+    INVALID_FILES:"invalid files"
 }
 export default MESSAGES

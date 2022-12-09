@@ -1,4 +1,4 @@
-class MyResponse {
+class Response {
     success(res, data, statusCode = 200) {
         let myPayload = {
             status: true,
@@ -17,4 +17,4 @@ class MyResponse {
         res.status(statusCode).send(myPayload);
     }
 }
-export default new MyResponse
+export default new Response

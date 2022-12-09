@@ -1,5 +1,5 @@
-import MyResponse from '../helpers/message'
-import schemaValidator from "../helpers/schemaValidation"
+import MyResponse from '../helpers/response'
+import schemaValidator from "../helpers/schema-validator"
 class ValidateMiddleware {
     JoiMiddleware(req, res, next) {
         let myRoute = req.route.path

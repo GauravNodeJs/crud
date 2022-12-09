@@ -1,9 +1,9 @@
-import UserService from "./services/myUsers.js";
+import UserService from "../services/myUsers";
 import bodyParser from 'express'
-import ValidateMiddleware from './middleware/schemaMiddleware.js'
-import MiddlewareToken from "./middleware/tokenMiddleware.js";
-import upload from './helpers/multerHelper'
-import { nextTick } from "process";
+import ValidateMiddleware from '../middleware/schemaMiddleware'
+import MiddlewareToken from "../middleware/tokenMiddleware.js";
+import upload from '../helpers/multerHelper'
+
 
 
 const get = (app) => {
@@ -14,15 +14,7 @@ const get = (app) => {
     app.get('/profile', MiddlewareToken.tokenMiddleware, UserService.profile);
     app.put('/updateUser', [MiddlewareToken.tokenMiddleware, ValidateMiddleware.JoiMiddleware], UserService.updateUser)
     app.delete('/deleteUser', MiddlewareToken.tokenMiddleware, UserService.softDelete)
-    app.post('/addfile',(req,res,next)=>{
-        upload(req,res,(err)=>{
-            if (err) {
-                res.status(500).send({message:"cannot upload"});
-            } else{
-                res.send(req.files) 
-            }   
-        })  
-    })
+    app.post('/addfile',UserService.addFile)
     app.post('/addQuote',MiddlewareToken.tokenMiddleware,UserService.addquotes)
     app.get('/getQuote',MiddlewareToken.tokenMiddleware,UserService.getQuotes)
 }

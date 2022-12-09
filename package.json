@@ -21,7 +21,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon -r esm-wallaby index"
+    "start": "nodemon -r esm-wallaby Src/index"
   },
   "author": "",
   "license": "ISC",

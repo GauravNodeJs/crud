@@ -1,6 +1,5 @@
-import { error } from 'console';
+
 import multer from 'multer';
-import Helper from './message'
 
 
 const multerStorage = multer.diskStorage({
@@ -14,7 +13,7 @@ const multerStorage = multer.diskStorage({
 });
 const multerFilter = (req, file, cb) => {
   const myFile=file.mimetype.split("/")[1]
-  if (myFile === "doc" || myFile === "pdf" || myFile === "ppt") {
+  if (myFile === "png" || myFile === "pdf" || myFile === "ppt") {
     cb(null,true);
   } else {
     cb(new Error("invalid---"),false);

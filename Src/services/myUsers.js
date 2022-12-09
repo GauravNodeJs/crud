@@ -1,9 +1,10 @@
 import User from "../models/users";
-import MyResponse from "../helpers/message";
+import Helper from "../helpers/index";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import MESSAGES from "../helpers/commonMessages";
 import Quote from "../models/quotes";
+import upload from "../helpers/multerHelper";
 class UserService {
   async registerAllUser(req, res) {
     try {
@@ -12,7 +13,7 @@ class UserService {
         let resPayload = {
           message: MESSAGES.EMAIL_EXIST,
         };
-        return MyResponse.error(res, resPayload, 409);
+        return Helper.error(res, resPayload, 409);
       }
       const myData = new User(req.body);
       myData.save();
@@ -20,12 +21,12 @@ class UserService {
       let resPayload = {
         message: MESSAGES.REGISTER_SUCCESS,
       };
-      MyResponse.success(res, resPayload);
+      return Helper.success(res, resPayload);
     } catch (err) {
       let resPayload = {
         message: MESSAGES.SOMETHING_WENT_WRONG,
       };
-      return MyResponse.error(res, resPayload, 500);
+      return Helper.error(res, resPayload, 500);
     }
   }
   async loginUsers(req, res) {
@@ -35,13 +36,13 @@ class UserService {
         let resPayload = {
           message: MESSAGES.INVALID_CREDENTIALS,
         };
-        return MyResponse.error(res, resPayload, 401);
+        return Helper.error(res, resPayload, 401);
       }
       if (user.delete === true) {
         let resPayload = {
           message: MESSAGES.USER_NOT_FOUND,
         };
-        return MyResponse.error(res, resPayload, 404);
+        return Helper.error(res, resPayload, 404);
       }
 
       const validPassword = await bcrypt.compare(
@@ -53,19 +54,19 @@ class UserService {
         let resPayload = {
           message: MESSAGES.INVALID_CREDENTIALS,
         };
-        return MyResponse.error(res, resPayload, 401);
+        return Helper.error(res, resPayload, 401);
       }
       const token = jwt.sign({ _id: user._id }, process.env.SECRET_KEY);
       const resPayload = {
         message: MESSAGES.LOGIN_SUCCESS,
         payload: { token: token },
       };
-      return MyResponse.success(res, resPayload);
+      return Helper.success(res, resPayload);
     } catch (err) {
       let resPayload = {
         message: MESSAGES.SOMETHING_WENT_WRONG,
       };
-      return MyResponse.error(res, resPayload, 500);
+      return Helper.error(res, resPayload, 500);
     }
   }
   async profile(req, res) {
@@ -81,12 +82,12 @@ class UserService {
         message: MESSAGES.PROFILE,
         payload: myMessage,
       };
-      return MyResponse.success(res, resPayload);
+      return Helper.success(res, resPayload);
     } catch (err) {
       let resPayload = {
         message: MESSAGES.SOMETHING_WENT_WRONG,
       };
-      return MyResponse.error(res, resPayload, 500);
+      return Helper.error(res, resPayload, 500);
     }
   }
   async updateUser(req, res) {
@@ -97,7 +98,7 @@ class UserService {
       let resPayload = {
         message: MESSAGES.EMAIL_EXIST,
       };
-      return MyResponse.error(res, resPayload, 409);
+      return Helper.error(res, resPayload, 409);
     }
 
     User.findByIdAndUpdate(req.user._id, req.body, { new: true })
@@ -109,13 +110,13 @@ class UserService {
           message: MESSAGES.UPDATED_SUCCESS,
           payload: item,
         };
-        return MyResponse.success(res, resPayload);
+        return Helper.success(res, resPayload);
       })
       .catch((err) => {
         let resPayload = {
           message: MESSAGES.SOMETHING_WENT_WRONG,
         };
-        return MyResponse.error(res, resPayload, 500);
+        return Helper.error(res, resPayload, 500);
       });
   }
 
@@ -127,7 +128,7 @@ class UserService {
         let resPayload = {
           message: MESSAGES.USER_NOT_FOUND,
         };
-        return MyResponse.error(res, resPayload, 404);
+        return Helper.error(res, resPayload, 404);
       }
       const user = await User.findByIdAndUpdate(myId, { delete: true }).then(
         (item) => {
@@ -135,14 +136,14 @@ class UserService {
             message: MESSAGES.DELETE_USER,
             payload: {},
           };
-          return MyResponse.success(res, resPayload);
+          return Helper.success(res, resPayload);
         }
       );
     } catch (err) {
       let resPayload = {
         message: MESSAGES.SOMETHING_WENT_WRONG,
       };
-      return MyResponse.error(res, resPayload, 500);
+      return Helper.error(res, resPayload, 500);
     }
   }
   async addquotes(req, res) {
@@ -163,21 +164,21 @@ class UserService {
             message: MESSAGES.QUOTS_SUCCESS,
             payload: value.tittle,
           };
-          return MyResponse.success(res, resPayload);
+          return Helper.success(res, resPayload);
         })
         .catch((err) => {
           let resPayload = {
             message: err,
             payload: {},
           };
-          return MyResponse.error(res, resPayload);
+          return Helper.error(res, resPayload);
         });
     } catch (err) {
       let resPayload = {
         message: MESSAGES.SOMETHING_WENT_WRONG,
         payload: {},
       };
-      return MyResponse.error(res, resPayload, 500);
+      return Helper.error(res, resPayload, 500);
     }
   }
   async getQuotes(req, res) {
@@ -204,16 +205,41 @@ class UserService {
       ]);
       let resPayload = {
         message: MESSAGES.YOUR_QUOTES,
-        payload: userData,
+        payload: userData
       };
-      return MyResponse.success(res, resPayload);
+      return Helper.success(res, resPayload);
     } catch (err) {
       const resPayload = {
         message: MESSAGES.SOMETHING_WENT_WRONG,
         payload: {},
       };
-      return MyResponse.error(res, resPayload);
+      return Helper.error(res, resPayload);
     }
+  }
+  addFile(req,res){
+    try{
+      upload(req,res,(err)=>{
+        if (err) {
+          let resPayload = {
+            message: MESSAGES.INVALID_FILES,
+          }
+          return Helper.success(res, resPayload,409)
+        } else{
+          const resPayload = {
+            message: MESSAGES.SOMETHING_WENT_WRONG,
+            payload: {file:req.files},
+          };
+          return Helper.error(res, resPayload,200);
+        }   
+      }) 
+    }
+    catch(error){
+      const resPayload = {
+        message: MESSAGES.SOMETHING_WENT_WRONG,
+        payload: {},
+      };
+      return Helper.error(res, resPayload,500)
+    } 
   }
 }
 

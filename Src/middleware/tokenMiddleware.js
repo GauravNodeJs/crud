@@ -1,4 +1,4 @@
-import MyResponse from '../helpers/message'
+import MyResponse from '../helpers/response'
 import jwt from 'jsonwebtoken'
 class MiddlewareToken {
     tokenMiddleware(req, res, next) {
